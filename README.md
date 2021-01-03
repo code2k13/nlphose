@@ -37,22 +37,22 @@ cd scripts
 
 Get positive tweets containing term netflix :
 ```shell
-twint -s netflix | python3 twint2json.py | python3 senti.py |python3 entity.py | jq 'if (.afinn_score) > 5 then .tweet else empty  end'
+twint -s netflix | python3 twint2json.py | python3 senti.py | python3 entity.py | jq 'if (.afinn_score) > 5 then .tweet else empty  end'
 ```
 
 Get works of art (TV shows or movie names) in positive tweets containing term netflix :
 ```shell
-twint -s netflix | python3 twint2json.py | python3 senti.py |python3 entity.py | jq 'if (.afinn_score) > 5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
+twint -s netflix | python3 twint2json.py | python3 senti.py | python3 entity.py | jq 'if (.afinn_score) > 5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
 ```
 
 Get works of art (TV shows or movie names) in negative tweets containing term netflix :
 ```shell
-twint -s netflix | python3 twint2json.py | python3 senti.py |python3 entity.py | jq 'if (.afinn_score) < -5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
+twint -s netflix | python3 twint2json.py | python3 senti.py | python3 entity.py | jq 'if (.afinn_score) < -5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
 ```
 
-Get tweet and people mentioned mentioned in postive tweets about premierleague :
+Get tweet and people mentioned in postive tweets about premierleague :
 ```shell
-twint -s premierleague | python3 twint2json.py | python3 senti.py |python3 entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.tweet,.entity]     else empty  end'
+twint -s premierleague | python3 twint2json.py | python3 senti.py | python3 entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.tweet,.entity]     else empty  end'
 ```
 
  
