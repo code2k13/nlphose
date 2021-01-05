@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 import spacy
 import json
@@ -6,9 +7,9 @@ nlp = spacy.load('en_core_web_sm')
 
 for line in sys.stdin:
 	obj  = json.loads(line)	 
-	doc = nlp(obj["tweet"])
+	doc = nlp(obj["text"])
 	ents = []
 	for entity in doc.ents:	
 		ents.append({"label":entity.label_ ,"entity": entity.text })
 	obj["entities"] = ents 
-	print(json.dumps(obj))
+	print(json.dumps(obj,ensure_ascii=False))

@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 import sys
 import json
 
@@ -8,5 +8,5 @@ for line in sys.stdin:
     obj['id'] = s[0]
     obj['date'] = s[1] + " " + s[2] + " " + s[3]
     obj['user'] = s[4]
-    obj['tweet'] = " ".join(s[5:])	
-    print(json.dumps(obj))
+    obj['text'] = " ".join(s[5:])
+    print(json.dumps(obj,ensure_ascii=False))
