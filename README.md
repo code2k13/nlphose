@@ -57,7 +57,10 @@ Get tweet and people mentioned in postive tweets about premierleague :
 ```shell
 twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.text,.entity]     else empty  end'
 ```
-
+Get tweets about India in hindi
+```shell
+ twint -s india | ./twint2json.py | ./lang.py | jq ' if .lang == "hi" then .text  else empty  end'
+```
  
 
 ## Acknowledgements
