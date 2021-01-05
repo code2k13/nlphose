@@ -12,4 +12,4 @@ for line in sys.stdin:
                 obj["lang"] = prediction[0][0].split("__")[-1]
             else:
                 obj["lang"] = "UNKNOWN"
-    print(json.dumps(obj)) 
+    print(json.dumps(obj,ensure_ascii=False)) 
