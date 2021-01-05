@@ -19,6 +19,7 @@ Execute the below commands to install everything that is required.
 ```shell
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
+git clone https://github.com/code2k13/nlppipe
 ```
 
 If jq is not installed on your system, you will need to install it aswell
@@ -32,7 +33,7 @@ apt-get install jq
 
 Make sure you are in the */scripts* folder:
 ```shell
-cd scripts
+cd nlppipe/scripts
 chmod +x *.py
 ```
 
@@ -54,7 +55,7 @@ twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_s
 
 Get tweet and people mentioned in postive tweets about premierleague :
 ```shell
-twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.tweet,.entity]     else empty  end'
+twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.text,.entity]     else empty  end'
 ```
 
  
