@@ -61,7 +61,10 @@ Get tweets about India in hindi
 ```shell
  twint -s india | ./twint2json.py | ./lang.py | jq ' if .lang == "hi" then .text  else empty  end'
 ```
- 
+Get noun phrases that match (adjective * noun/ noun * noun) in all tweets containing foldscope
+```shell
+twint -s foldscope | ./twint2json.py | ./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | jq ' if (.chunks | length) > 0 then .chunks else empty end'
+```
 
 ## Acknowledgements
 

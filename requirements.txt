@@ -2,3 +2,4 @@ afinn
 spacy
 git+https://github.com/twintproject/twint.git@origin/master#egg=twint
 fasttext
+nltk
