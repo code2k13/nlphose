@@ -8,6 +8,7 @@ Currently following scripts are present:
 * senti.py - perfroms AFINN based sentiement analysis on the json formatted tweet and appends *afinn_score* field with AFINN afinn_score
 * entity.py - performs named entity recognition on json fromatted tweets using [spacy](https://github.com/explosion/spaCy)
 * lang.py - performs language identificiation using FastText and [lid.176.ftz](https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.ftz) model
+* chunk.py - extracts chunks using [NLTK's regex based chunking](https://www.nltk.org/book_1ed/ch07.html) feature. You need to supply a regex and a name for the regex
 
 ## Prerequisites
 
@@ -65,6 +66,22 @@ Get noun phrases that match (adjective * noun/ noun * noun) in all tweets contai
 ```shell
 twint -s foldscope | ./twint2json.py | ./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | jq ' if (.chunks | length) > 0 then .chunks else empty end'
 ```
+
+## Stopping without loosing data
+Because the output of programs is piped to each other there is always a 'performace mismatch'. Some scripts run faster than others, so buffering needs to be used.
+Thankfully, this is automatically handled by the operating system, we need not worry. However, this will lead to increased memory usage over time.
+To stop the piped command without loosing any data, you just need to terminate the first command, which in above cases is *twint*.
+
+First we need to find the process id of the process running twint using below command:
+```shell
+ps -aux |grep twint
+```
+
+then kill it using:
+```shell
+kill - KILL xxxxx
+```
+Even if the first command is killed, the data is processed by subsequent commands. DO NOT stop the piped command using CTRL+C if you care about data loss. 
 
 ## Acknowledgements
 
