@@ -1,4 +1,5 @@
 # nlphose
+![nlphose](whatisnlphose.gif)
 This is a collection of python scripts that perform NLP tasks on output of [twint](https://github.com/twintproject/twint).
 Idea is to simply pipe output from twint to these 
 scripts. Every script perfroms a different type of NLP operation on tweets, and it's output can be in turn piped to another script.
