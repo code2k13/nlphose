@@ -68,7 +68,7 @@ Get noun phrases that match (adjective * noun/ noun * noun) in all tweets contai
 twint -s foldscope | ./twint2json.py | ./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | jq ' if (.chunks | length) > 0 then .chunks else empty end'
 ```
 
-## Stopping without loosing data
+## Stopping the pipeline without loosing data
 Because the output of programs is piped to each other there is always a 'performace mismatch'. Some scripts run faster than others, so buffering needs to be used.
 Thankfully, this is automatically handled by the operating system, we need not worry. However, this will lead to increased memory usage over time.
 To stop the piped command without loosing any data, you just need to terminate the first command, which in above cases is *twint*.
@@ -83,6 +83,34 @@ then kill it using:
 kill - KILL xxxxx
 ```
 Even if the first command is killed, the data is processed by subsequent commands. DO NOT stop the piped command using CTRL+C if you care about data loss. 
+
+## Monitoring progress
+Every command in the pipeline will have different rate of processing data. You can easily monitor the progress of each command in the pipeline 
+using the *pv* command.
+
+First you will have to download and install *pv* if you dont have it :
+```shell
+apt-get install pv
+```
+Once you have the *pv* command installed you need to modify your pipeline to use it at points where you want to monitor output/progress. 
+
+For example, let us look at a sample NLP pipeline:
+```shell
+twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py |./chunk.py  observation '{<JJ>|<NN?>*<NN>}' > output.txt
+```
+The above pipeline finds tweets about *premierleague* and performs sentiment analysis, named entity recognition and chunk extraction before saving 
+the output to *output.txt*. Now let us say we want to know how many tweets are being read per second and how many per second complete processing.
+To do that we can use *pv -N INPUT -i 2 -l* command. This command reads count  of lines *(-l)* piped into it and shows count of lines received per seconds.
+The display is refreshed after two seconds *(-i 2)*. The count is shown with a unique label i.e *INPUT* in this case. 
+
+We can use the *pv* command at multiple positions in our pipes (with different labels), so that we can monitor the performance of overall pipeline at various points.
+In the sample below, I have used *pv* command twice, with labels *INPUT* (for incoming tweets) and *PROCESSED* (for processed records).
+```shell
+twint -s premierleague |pv -N INPUT-i 2 -l|  ./twint2json.py | ./senti.py | ./entity.py |./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | pv -N PROCESSED -i 2 -l > output.txt
+```
+You should see similar output, when you run the command :
+
+![nlphose.gif](nlphosepv.gif)
 
 ## Acknowledgements
 
