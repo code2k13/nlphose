@@ -16,15 +16,15 @@ Currently following scripts are present:
   Examples of usage:
   * For 'sentiment-analysis' task, the --pipeline has to be specified as 'sentiment-analysis'
     ```
-     ... |  python3 scripts/xformer.py --pipeline sentiment-analysis  --param "sports#news#history"
+     ... |  ./xformer.py --pipeline sentiment-analysis  --param "sports#news#history"
     ```
   * For 'question-answering' task, the --param should be the question we want to ask
     ```
-    ... |  python3 scripts/xformer.py --pipeline question-answering  --param 'By how many runs did India win ?'
+    ... |  ./xformer.py --pipeline question-answering  --param 'By how many runs did India win ?'
     ```
   * For 'zero-shot-classification' the --param should be a single string containing labels seperated by '#'
     ```
-    ... |  python3 scripts/xformer.py --pipeline zero-shot-classification  --param "sports#news#history"
+    ... |  ./xformer.py --pipeline zero-shot-classification  --param "sports#news#history"
     ```           
   Additionally, a GPU device can be specified by adding a optional parameter '--device'
 
