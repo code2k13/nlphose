@@ -10,6 +10,24 @@ Currently following scripts are present:
 * entity.py - performs named entity recognition on json fromatted tweets using [spacy](https://github.com/explosion/spaCy)
 * lang.py - performs language identificiation using FastText and [lid.176.ftz](https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.ftz) model
 * chunk.py - extracts chunks using [NLTK's regex based chunking](https://www.nltk.org/book_1ed/ch07.html) feature. You need to supply a regex and a name for the regex
+* xformer.py - Adds power of transformers to the tool. It currently supports these three tasks: 'sentiment-analysis',
+                             'question-answering' and 'zero-shot-classification'
+
+  Examples of usage:
+  * For 'sentiment-analysis' task, the --pipeline has to be specified as 'sentiment-analysis'
+    ```
+     ... |  python3 scripts/xformer.py --pipeline sentiment-analysis  --param "sports#news#history"
+    ```
+  * For 'question-answering' task, the --param should be the question we want to ask
+    ```
+    ... |  python3 scripts/xformer.py --pipeline question-answering  --param 'By how many runs did India win ?'
+    ```
+  * For 'zero-shot-classification' the --param should be a single string containing labels seperated by '#'
+    ```
+    ... |  python3 scripts/xformer.py --pipeline zero-shot-classification  --param "sports#news#history"
+    ```           
+  Additionally, a GPU device can be specified by adding a optional parameter '--device'
+
 
 ## Prerequisites
 
@@ -35,16 +53,19 @@ apt-get install jq
 
 Make sure you are in the */scripts* folder:
 ```shell
-cd nlppipe/scripts
+cd nlphose/scripts
 chmod +x *.py
 ```
 
 
-Get positive tweets containing term netflix :
+Get positive tweets containing term netflix (AFINN) :
 ```shell
-twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) > 5 then .tweet else empty  end'
+twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) > 5 then .text else empty  end'
 ```
-
+Get positive tweets containing term netflix (transformers) :
+```shell
+twint -s netflix | ./twint2json.py | ./xformer.py --pipeline sentiment-analysis  | jq 'if (.xfrmr_sentiment_analysis[0].label) == "POSITIVE" then .text else empty  end'
+```
 Get works of art (TV shows or movie names) in positive tweets containing term netflix :
 ```shell
 twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) > 5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
@@ -66,6 +87,16 @@ Get tweets about India in hindi
 Get noun phrases that match (adjective * noun/ noun * noun) in all tweets containing foldscope
 ```shell
 twint -s foldscope | ./twint2json.py | ./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | jq ' if (.chunks | length) > 0 then .chunks else empty end'
+```
+
+Get all tweets containing the word 'rainfall' and extract location which experienced rainfall using quantion-answering task
+```shell
+twint -s 'rainfall' | ./twint2json.py | ./xformer.py --pipeline question-answering --param 'where did it rain'   | jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
+```
+
+Get all tweets containing the word 'food' and classify if the tweet was about Indian, Italian, Mexican or Chinese food
+```shell
+twint -s 'food' | ./twint2json.py | ./xformer.py --pipeline zero-shot-classification --param 'indian#italian#mexican#chinese'  
 ```
 
 ## Stopping the pipeline without loosing data
