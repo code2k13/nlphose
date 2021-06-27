@@ -60,43 +60,73 @@ chmod +x *.py
 
 Get positive tweets containing term netflix (AFINN) :
 ```shell
-twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) > 5 then .text else empty  end'
+twint -s netflix |\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+jq 'if (.afinn_score) > 5 then .text else empty  end'
 ```
 Get positive tweets containing term netflix (transformers) :
 ```shell
-twint -s netflix | ./twint2json.py | ./xformer.py --pipeline sentiment-analysis  | jq 'if (.xfrmr_sentiment_analysis[0].label) == "POSITIVE" then .text else empty  end'
+twint -s netflix |\
+./twint2json.py |\
+./xformer.py --pipeline sentiment-analysis |\
+jq 'if (.xfrmr_sentiment_analysis[0].label) == "POSITIVE" then .text else empty  end'
 ```
 Get works of art (TV shows or movie names) in positive tweets containing term netflix :
 ```shell
-twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) > 5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
+twint -s netflix |\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+jq 'if (.afinn_score) > 5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity else empty end'
 ```
 
 Get works of art (TV shows or movie names) in negative tweets containing term netflix :
 ```shell
-twint -s netflix | ./twint2json.py | ./senti.py | ./entity.py | jq 'if (.afinn_score) < -5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity    else empty  end'
+twint -s netflix |\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+jq 'if (.afinn_score) < -5 then .entities|.[]| select(.label == "WORK_OF_ART") | .entity else empty end'
 ```
 
 Get tweet and people mentioned in postive tweets about premierleague :
 ```shell
-twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py | jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.text,.entity]     else empty  end'
+twint -s premierleague |\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+jq ' if (.afinn_score) > 5 then . as $parent | .entities|.[]| select((.label == "PERSON") and .entity != "Netflix") | [$parent.text,.entity] else empty end'
 ```
 Get tweets about India in hindi
 ```shell
- twint -s india | ./twint2json.py | ./lang.py | jq ' if .lang == "hi" then .text  else empty  end'
+twint -s india |\
+./twint2json.py |\
+./lang.py |\
+jq ' if .lang == "hi" then .text  else empty  end'
 ```
 Get noun phrases that match (adjective * noun/ noun * noun) in all tweets containing foldscope
 ```shell
-twint -s foldscope | ./twint2json.py | ./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | jq ' if (.chunks | length) > 0 then .chunks else empty end'
+twint -s foldscope |\
+./twint2json.py |\
+./chunk.py  observation '{<JJ>|<NN?>*<NN>}' |\
+jq ' if (.chunks | length) > 0 then .chunks else empty end'
 ```
 
 Get all tweets containing the word 'rainfall' and extract location which experienced rainfall using quantion-answering task
 ```shell
-twint -s 'rainfall' | ./twint2json.py | ./xformer.py --pipeline question-answering --param 'where did it rain'   | jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
+twint -s 'rainfall' |\
+./twint2json.py |\
+./xformer.py --pipeline question-answering --param 'where did it rain' |\
+jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
 ```
 
 Get all tweets containing the word 'food' and classify if the tweet was about Indian, Italian, Mexican or Chinese food
 ```shell
-twint -s 'food' | ./twint2json.py | ./xformer.py --pipeline zero-shot-classification --param 'indian#italian#mexican#chinese'  
+twint -s 'food' |\
+./twint2json.py |\
+./xformer.py --pipeline zero-shot-classification --param 'indian#italian#mexican#chinese'    
 ```
 
 ## Stopping the pipeline without loosing data
