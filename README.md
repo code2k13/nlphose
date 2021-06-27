@@ -157,7 +157,11 @@ Once you have the *pv* command installed you need to modify your pipeline to use
 
 For example, let us look at a sample NLP pipeline:
 ```shell
-twint -s premierleague | ./twint2json.py | ./senti.py | ./entity.py |./chunk.py  observation '{<JJ>|<NN?>*<NN>}' > output.txt
+twint -s premierleague |\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+./chunk.py  observation '{<JJ>|<NN?>*<NN>}' > output.txt
 ```
 The above pipeline finds tweets about *premierleague* and performs sentiment analysis, named entity recognition and chunk extraction before saving 
 the output to *output.txt*. Now let us say we want to know how many tweets are being read per second and how many per second complete processing.
@@ -167,7 +171,13 @@ The display is refreshed after two seconds *(-i 2)*. The count is shown with a u
 We can use the *pv* command at multiple positions in our pipes (with different labels), so that we can monitor the performance of overall pipeline at various points.
 In the sample below, I have used *pv* command twice, with labels *INPUT* (for incoming tweets) and *PROCESSED* (for processed records).
 ```shell
-twint -s premierleague |pv -N INPUT-i 2 -l|  ./twint2json.py | ./senti.py | ./entity.py |./chunk.py  observation '{<JJ>|<NN?>*<NN>}' | pv -N PROCESSED -i 2 -l > output.txt
+twint -s premierleague |\
+pv -N INPUT -i 2 -l|\
+./twint2json.py |\
+./senti.py |\
+./entity.py |\
+./chunk.py  observation '{<JJ>|<NN?>*<NN>}' |\
+pv -N PROCESSED -i 2 -l > output.txt
 ```
 You should see similar output, when you run the command :
 
