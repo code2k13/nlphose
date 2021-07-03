@@ -68,11 +68,11 @@ apt-get install jq
 
 ## Usage Examples
 
-Make sure you are in the */scripts* folder:
-```shell
-cd nlphose/scripts
-chmod +x *.py
-```
+Make sure you are in the */scripts/ folder ( **NOT required when using Docker**)  :
+  ```shell
+  cd nlphose/scripts
+  chmod +x *.py
+  ```
 
 
 Get positive tweets containing term netflix (AFINN) :
