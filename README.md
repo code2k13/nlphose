@@ -1,3 +1,11 @@
+### [Introduction](#nlphose)
+### [Installing and running with Docker - recommended](#installing-and-running-with-docker)
+### [Installing and running without Docker](#installing-and-running-without-docker)
+### [Running examples](#usage-examples)
+### [Stopping the pipeline without loosing data](#stopping-the-pipeline-without-loosing-data)
+### [Monitoring progress](#monitoring-progress)
+### [Acknowledgements](#acknowledgements)
+
 # nlphose
 ![nlphose](whatisnlphose.gif)
 This is a collection of python scripts that perform NLP tasks on output of [twint](https://github.com/twintproject/twint).
@@ -29,17 +37,25 @@ Currently following scripts are present:
   Additionally, a GPU device can be specified by adding a optional parameter '--device'
 
 
-## Prerequisites
+## Installing and running with Docker
+Simply run following command
+```
+docker run --rm -it code2k13/nlphose:latest
+```
 
+then start [running examples](#Usage-Examples)
+
+## Installing and running without Docker
+
+Prerequisites
 * Python 3 
-* Linux
+* Linux or Windows
 
-## Installations
 Execute the below commands to install everything that is required.
 ```shell
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
-git clone https://github.com/code2k13/nlppipe
+git clone https://github.com/code2k13/nlphose
 ```
 
 If jq is not installed on your system, you will need to install it aswell
