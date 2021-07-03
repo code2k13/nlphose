@@ -1,12 +1,13 @@
-### [Introduction](#nlphose)
-### [Installing and running with Docker - recommended](#installing-and-running-with-docker)
-### [Installing and running without Docker](#installing-and-running-without-docker)
-### [Running examples](#usage-examples)
-### [Stopping the pipeline without loosing data](#stopping-the-pipeline-without-loosing-data)
-### [Monitoring progress](#monitoring-progress)
-### [Acknowledgements](#acknowledgements)
+### Table of Contents
+- [Introduction](#introduction)
+- [Installing and running with Docker](#installing-and-running-with-docker)
+- [Installing and running without Docker](#installing-and-running-without-docker)
+- [Usage Examples](#usage-examples)
+- [Stopping the pipeline without loosing data](#stopping-the-pipeline-without-loosing-data)
+- [Monitoring progress](#monitoring-progress)
+- [Acknowledgements](#acknowledgements)
 
-# nlphose
+## Introduction
 ![nlphose](whatisnlphose.gif)
 This is a collection of python scripts that perform NLP tasks on output of [twint](https://github.com/twintproject/twint).
 Idea is to simply pipe output from twint to these 
