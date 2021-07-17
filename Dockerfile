@@ -8,5 +8,6 @@ RUN python -m spacy download en_core_web_sm
 RUN git clone https://github.com/code2k13/nlphose
 RUN apt-get update
 RUN apt-get install jq -y
+RUN apt-get install pv -y
 WORKDIR /usr/src/app/nlphose/scripts
 CMD ["bash"]

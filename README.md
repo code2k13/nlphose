@@ -1,5 +1,4 @@
-# nlphose : Command-line 🛠️tools for creating NLP pipelines
-
+![nlphose](logo.png)
 Nlphose is a set of command-line tools that enables creation of complex NLP pipelines within seconds. 
 It currently supports following operation on static files and streaming data:
 
@@ -23,7 +22,7 @@ twint -s 'rainfall' |\
 jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
 ```
 
-## 😮😮😮 Looks interesting ??
+## 😲😲😲 Looks interesting ??
 
 Checkout the 🔗[installation guide ](https://github.com/code2k13/nlphose/wiki/Installing) and 🔎[some usage examples](https://github.com/code2k13/nlphose/wiki/Quickstart). Please refer to the wiki for 📖[detailed documentation](https://github.com/code2k13/nlphose/wiki/Introduction)
 

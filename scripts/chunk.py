@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 import sys
 import json
 import nltk
+import json
+
 
 nltk.download('averaged_perceptron_tagger',  quiet=True)
 nltk.download('punkt', quiet=True)
