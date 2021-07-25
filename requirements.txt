@@ -5,3 +5,4 @@ fasttext
 nltk
 tensorflow
 transformers
+local-geocode

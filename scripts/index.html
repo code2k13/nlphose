@@ -1,0 +1,30 @@
+<html>
+
+<head>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js"
+        integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var socket = io();
+
+        socket.on("connect", () => {
+            document.getElementById("messages").innerText = "Connected ! Waiting for messages ....";
+        });
+
+        socket.on('data', function (data) {
+            document.getElementById("messages").innerText = document.getElementById("messages").innerText
+             + JSON.stringify(JSON.parse(data.line),2, 2) + "----------------------------------------"
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id='messages' style="background-color: black;color:white;font-family: 'Courier New', Courier, monospace;font-size:x-small">
+        Waiting for connection !!!
+    </div>
+</body>
+
+</html>

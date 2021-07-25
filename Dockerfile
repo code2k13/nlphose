@@ -9,5 +9,12 @@ RUN git clone https://github.com/code2k13/nlphose
 RUN apt-get update
 RUN apt-get install jq -y
 RUN apt-get install pv -y
+RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+ && git clone https://github.com/nodejs/node.git \
+ && cd node \
+ && ./configure \
+ && make \
+ && sudo make install
 WORKDIR /usr/src/app/nlphose/scripts
+RUN npm install
 CMD ["bash"]
