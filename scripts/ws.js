@@ -29,7 +29,7 @@ var rl = readline.createInterface({
 rl.on('line', function (line) {
     io.emit('data', { line: line });
 })
-app.listen(port, "127.0.0.1");
+app.listen(port);
 
 
 
