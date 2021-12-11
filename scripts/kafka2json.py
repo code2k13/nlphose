@@ -3,7 +3,7 @@
 import json
 from kafka import KafkaConsumer
 import argparse
-
+import sys
 
 parser = argparse.ArgumentParser(
     description='Subscribe to kafka topic, syntax: ./kafka2json.py -topic mytopic -endpoint 10.232.3.2.3:1234 -groupId mygroup')
@@ -17,9 +17,11 @@ parser.add_argument('-groupId', required=True, type=str, nargs=1,
 args, unknown = parser.parse_known_args()
 
 
-consumer = KafkaConsumer(args.topic[0], group_id=args.groupId[0],bootstrap_servers=args.endpoint[0])
+consumer = KafkaConsumer(args.topic[0], group_id=None,bootstrap_servers=args.endpoint[0])
 for msg in consumer:
-    print(json.dumps(str(msg.value),ensure_ascii=False))
+    print(json.dumps(json.loads(msg.value),ensure_ascii=False))
+    sys.stdout.flush()
+    
 
  
 
