@@ -16,8 +16,7 @@ parser.add_argument('-groupId', required=True, type=str, nargs=1,
 
 args, unknown = parser.parse_known_args()
 
-
-consumer = KafkaConsumer(args.topic[0], group_id=None,bootstrap_servers=args.endpoint[0])
+consumer = KafkaConsumer(args.topic[0], group_id=args.groupId[0],bootstrap_servers=args.endpoint[0])
 for msg in consumer:
     print(json.dumps(json.loads(msg.value),ensure_ascii=False))
     sys.stdout.flush()
