@@ -24,7 +24,7 @@ jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
 
 ## 😲😲😲 Looks interesting ??
 
-Checkout the 🔗[installation guide ](https://github.com/code2k13/nlphose/wiki/Installing) and 🔎[some usage examples](https://github.com/code2k13/nlphose/wiki/Quickstart). Please refer to the wiki for 📖[detailed documentation](https://github.com/code2k13/nlphose/wiki/Introduction)
+Checkout the 🔗[installation guide ](https://github.com/code2k13/nlphose/wiki/Installing) and 🔎[some usage examples](https://github.com/code2k13/nlphose/wiki/Quickstart). Please refer to the wiki for 📖[detailed documentation](https://github.com/code2k13/nlphose/wiki)
 
 ## GUI Pipeline Builder (WIP)
 I am also working on a GUI Pipeline buider tool which allows users to create a pipeline by simply drag-and-drop
