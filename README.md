@@ -21,6 +21,7 @@ twint -s 'rainfall' |\
 ./xformer.py --pipeline question-answering --param 'where did it rain' |\
 jq '{"text":.text,"answer":.xfrmr_question_answering.answer}'
 ```
+Nlphose pipelines can run on your laptop or on a cluster of computers using [Kubernetes](https://ashishware.com/2021/12/12/scalablenlp/) or [Pyspark](https://ashishware.com/2022/01/23/PysparkNlphose/).
 
 ## 😲😲😲 Looks interesting ??
 
